@@ -77,9 +77,9 @@ int main(int argc, char const* argv[]) {
     const Terminal terminal(32, 32);
     terminal.clear();
 
-    terminal.fill_width("─");
+    terminal.fill_width("_");
     terminal.print_center("Welcome to Rock Paper Scissor");
-    terminal.fill_width("─");
+    terminal.fill_width("_");
 
     bool is_running = true;
     std::string input;
@@ -97,10 +97,10 @@ int main(int argc, char const* argv[]) {
         std::cout << "Paper:   2" << std::endl;
         std::cout << "Scissor: 3" << std::endl;
         std::cout << "Quit:    \u001b[38;5;1mq\u001b[0m" << std::endl;
-        terminal.fill_width("─");
+        terminal.fill_width("_");
         std::cout << "Input: ";
         std::cin >> input;
-        terminal.fill_width("─");
+        terminal.fill_width("_");
 
         if (input == "q") {
             is_running = false;
@@ -115,12 +115,12 @@ int main(int argc, char const* argv[]) {
         int computer_choice = 1 + (rand() % 3);
         input = "";
 
-        terminal.fill_width("─");
+        terminal.fill_width("_");
         std::cout << "Round: " << rounds << std::endl;
         std::cout << "You: " << player_score << " | "
                   << "Computer: " << computer_score << ", Ties: " << ties
                   << std::endl;
-        terminal.fill_width("─");
+        terminal.fill_width("_");
         std::cout << "You choosed ";
         if (print_choice(player_choice) == -1) {
             continue;

@@ -1,41 +1,8 @@
 #include <iostream>
 #include <string>
-
-class Terminal {
-  public:
-    Terminal(unsigned int width, unsigned int height)
-        : width(width), height(height) {}
-
-    inline void clear() const {
-        std::cout << std::string(MAX_CLEAR, '\n');
-        std::cout << "\u001b[" << MAX_CLEAR << "A"
-                  << "\u001b[" << width << "D";
-    }
-
-    inline void fill_width(const std::string& value) const {
-        for (int i = 0; i < width; i++)
-            std::cout << value;
-        std::cout << std::endl;
-    }
-
-    inline void print_center(const std::string& value) const { // TODO
-        std::cout << value << std::endl;
-    }
-
-    inline unsigned int get_width() const { return width; }
-    inline unsigned int get_height() const { return height; }
-    inline void set_width(unsigned int value) { width = value; }
-    inline void set_height(unsigned int value) { height = value; }
-
-  private:
-    unsigned int width;
-    unsigned int height;
-
-    unsigned int MAX_CLEAR = 100;
-};
+#include "Terminal.hpp"
 
 int string_to_int(const std::string& input) {
-
     try {
         return std::stoi(input);
     } catch (std::invalid_argument const& e) {
@@ -55,31 +22,29 @@ int string_to_int(const std::string& input) {
 
 int print_choice(const int& choice) {
     switch (choice) {
-    case 1:
-        std::cout << "Rock" << std::endl;
-        break;
-    case 2:
-        std::cout << "Paper" << std::endl;
-        break;
-    case 3:
-        std::cout << "Scissor" << std::endl;
-        break;
-    default:
-        std::cout << "\u001b[38;5;220mInvalid choice\u001b[0m\n";
-        return -1;
+        case 1:
+            std::cout << "Rock" << std::endl;
+            break;
+        case 2:
+            std::cout << "Paper" << std::endl;
+            break;
+        case 3:
+            std::cout << "Scissor" << std::endl;
+            break;
+        default:
+            std::cout << "\u001b[38;5;220mInvalid choice\u001b[0m\n";
+            return -1;
     }
 
     return 0;
 }
 
 int main(int argc, char const* argv[]) {
+    GN::Terminal::Clear();
 
-    const Terminal terminal(32, 32);
-    terminal.clear();
-
-    terminal.fill_width("_");
-    terminal.print_center("Welcome to Rock Paper Scissor");
-    terminal.fill_width("_");
+    std::cout << "-------------------------------" << std::endl;
+    std::cout << "Welcome to Rock Paper Scissor" << std::endl;
+    std::cout << "-------------------------------" << std::endl;
 
     bool is_running = true;
     std::string input;
@@ -90,37 +55,36 @@ int main(int argc, char const* argv[]) {
     int ties = 0;
 
     while (is_running) {
-        if (rounds != 0)
-            terminal.clear();
+        if (rounds != 0) GN::Terminal::Clear();
 
         std::cout << "Rock:    1" << std::endl;
         std::cout << "Paper:   2" << std::endl;
         std::cout << "Scissor: 3" << std::endl;
-        std::cout << "Quit:    \u001b[38;5;1mq\u001b[0m" << std::endl;
-        terminal.fill_width("_");
+        GN::Color::SetColor(GN::Colors::RED);
+        std::cout << "Quit:    q" << std::endl;
+        GN::Color::ResetColor();
+        std::cout << "-------------------------------" << std::endl;
         std::cout << "Input: ";
         std::cin >> input;
-        terminal.fill_width("_");
+        std::cout << std::endl;
 
         if (input == "q") {
             is_running = false;
             continue;
         }
-        terminal.clear();
+        GN::Terminal::Clear();
 
         int player_choice = string_to_int(input);
-        if (player_choice == -1)
-            continue;
+        if (player_choice == -1) continue;
 
         int computer_choice = 1 + (rand() % 3);
         input = "";
 
-        terminal.fill_width("_");
         std::cout << "Round: " << rounds << std::endl;
         std::cout << "You: " << player_score << " | "
                   << "Computer: " << computer_score << ", Ties: " << ties
                   << std::endl;
-        terminal.fill_width("_");
+        std::cout << "-------------------------------" << std::endl;
         std::cout << "You choosed ";
         if (print_choice(player_choice) == -1) {
             continue;
@@ -129,6 +93,7 @@ int main(int argc, char const* argv[]) {
         print_choice(computer_choice);
         std::cout << std::endl;
 
+        GN::Color::SetColor(GN::Colors::YELLOW);
         if (computer_choice == player_choice) {
             std::cout << "It's a tie!" << std::endl;
             ties++;
@@ -151,6 +116,8 @@ int main(int argc, char const* argv[]) {
             std::cout << "You won!" << std::endl;
             player_score++;
         }
+
+        GN::Color::ResetColor();
 
         std::cout << "\n";
         std::cout << "Press ENTER to continue";

@@ -60,9 +60,9 @@ int main(int argc, char const* argv[]) {
         std::cout << "Rock:    1" << std::endl;
         std::cout << "Paper:   2" << std::endl;
         std::cout << "Scissor: 3" << std::endl;
-        GN::Color::SetColor(GN::Colors::RED);
+        GN::Terminal::SetColor(GN::Colors::RED);
         std::cout << "Quit:    q" << std::endl;
-        GN::Color::ResetColor();
+        GN::Terminal::ResetColor();
         std::cout << "-------------------------------" << std::endl;
         std::cout << "Input: ";
         std::cin >> input;
@@ -93,7 +93,7 @@ int main(int argc, char const* argv[]) {
         print_choice(computer_choice);
         std::cout << std::endl;
 
-        GN::Color::SetColor(GN::Colors::YELLOW);
+        GN::Terminal::SetColor(GN::Colors::YELLOW);
         if (computer_choice == player_choice) {
             std::cout << "It's a tie!" << std::endl;
             ties++;
@@ -117,7 +117,7 @@ int main(int argc, char const* argv[]) {
             player_score++;
         }
 
-        GN::Color::ResetColor();
+        GN::Terminal::ResetColor();
 
         std::cout << "\n";
         std::cout << "Press ENTER to continue";

@@ -2,19 +2,19 @@
 
 namespace GN {
 
-    Terminal::Terminal(unsigned int width, unsigned int height)
+    Terminal::Terminal(u_int32_t width, u_int32_t height)
         : width(width), height(height) {}
 
     Terminal::~Terminal() {}
 
-    void Terminal::Clear() {
-        std::cout << std::string(MAX_CLEAR, '\n');
-        std::cout << Escape + "[" << MAX_CLEAR << "A" << Escape + "["
-                  << MAX_CLEAR << "D";
-    }
+    void Terminal::Clear() { std::cout << "\033[H\033[2J"; }
 
     void Terminal::Newline() { std::cout << '\n'; }
 
-    void Terminal::Hello() { std::cout << "Hello, World!" << std::endl; }
+    void Terminal::SetColor(Colors color) {
+        std::cout << Color::Color8bit(30 + color);
+    }
+
+    void Terminal::ResetColor() { std::cout << Color::Reset; }
 
 }  // namespace GN

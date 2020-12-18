@@ -1,6 +1,9 @@
 #pragma once
 #include <iostream>
 #include <vector>
+
+#include "Core.hpp"
+
 #include <string>
 #include "Color.hpp"
 
@@ -8,20 +11,22 @@ namespace GN {
 
     class Terminal {
        public:
-        inline const static std::string Escape = "\u001b";
+        inline const static char *Escape = "\u001b";
 
-        Terminal(unsigned int width, unsigned int height);
+        Terminal(u32 width, u32 height);
         ~Terminal();
 
         static void Clear();
 
         static void Newline();
 
-        static void Hello();
+        static void SetColor(Colors color);
+
+        static void ResetColor();
 
        private:
-        inline static unsigned int MAX_CLEAR = 100;
-        unsigned int width, height;
+        inline static u32 MAX_CLEAR = 100;
+        u32 width, height;
     };
 
 }  // namespace GN
